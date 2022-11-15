@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallsService, challenge2 } from '../api-calls.service';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-challenge2',
   templateUrl: './challenge2.component.html',
@@ -30,15 +30,26 @@ export class Challenge2Component implements OnInit {
       while(key.length != 16){
         key = key + "0";
       }
-    }else if(iv.length < 16){
+    }
+   if(iv.length < 16){
       //verleng iv 
       while(iv.length != 16){
         iv = iv + "0";
       }
     }
-
+ 
+    
     if(key.length == 16 && iv.length == 16){
       //decrypt
+      console.log("start decrypt");
+      
+
+      var decrypted_spell= this.decryptMessage(spell,key,iv)
+      this.service.PostChallange2(decrypted_spell).subscribe(data =>{
+        console.log("post result: " + data.keyPart);
+        
+      });
+
     }
 
     
@@ -46,5 +57,22 @@ export class Challenge2Component implements OnInit {
     
     
   }
+
+  decryptMessage(spell: string, key: string, iv: string){
+    var _key = CryptoJS.enc.Utf8.parse(key);
+    var _iv = CryptoJS.enc.Utf8.parse(iv);
+    let decryptedData = CryptoJS.AES.decrypt(spell, _key, {
+      iv: _iv
+    });
+    console.log("finish decrypt");
+
+    
+    return decryptedData.toString(CryptoJS.enc.Utf8);
+
+
+    
+
+  }
+
 
 }
