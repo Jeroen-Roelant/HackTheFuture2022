@@ -19,25 +19,24 @@ export class Challenge1Component implements OnInit {
 
 
   this.service.GetChallange1().subscribe((data:challenge1)=>{
+    //get variabels from get request
     var A = data.heroDistanceFromMonster;
     var WA = data.heroWeaponHeight;
     var MH  = data.monsterHeight;
     var HL = data.monsterNeckDistance;
+    //calculate angle  
     var alpha = this.calculateAngle(MH,HL,A,WA);
-    console.log("heroDistanceFromMonster: " +A);
-    console.log("heroWeaponHeight: " +WA);
-    console.log("monsterHeight: " +MH);
-    console.log("monsterNeckDistance: " +HL);
-    
-    console.log("hoek:" +alpha);
-
+   
+    //post naar endpoint
     this.service.PostChallange1(alpha).subscribe(data =>{
       console.log("post result: " + data.keyPart);
       
     });
   })  
   }
-
+  // calculate angle methode 
+  //TOA
+  //a = atan(overstaande / aanliggende )
   calculateAngle(monsterHeight: number, monsterNeckDistance: number, heroDistanceFromMonster: number, heroWeaponHeight: number){
     let x = 0;
     let tanx = ((monsterHeight - monsterNeckDistance - heroWeaponHeight) / heroDistanceFromMonster);

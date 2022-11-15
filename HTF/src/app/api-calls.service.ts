@@ -4,25 +4,26 @@ import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { map } from 'mathjs';
 
+//format return type get request api 1
 export interface challenge1 {
   monsterHeight: number;
   monsterNeckDistance: number;
   heroDistanceFromMonster: number;
   heroWeaponHeight: number;
 }
-
+//format return type get request api 2
 export interface challenge2 {
   key: string
   iv: string
   spell: string
 } 
-
+//format return type get request api 3
 export interface challenge3 {
   wizardType: string;
   maze: string[][];
 }
 
-
+//format return type post request api 
 export interface Keypart{
   "keyPart" : string;
 }
@@ -35,7 +36,7 @@ export class ApiCallsService {
   baseURL:string = "https://exs-htf2022-api.azurewebsites.net/api/challenges/"
 
   constructor(private http:HttpClient) { }
-//challenge 1
+  //challenge 1
   GetChallange1():Observable<challenge1>{
     const headers= new HttpHeaders()
       .set('Authorization', '016db3f4-8bf4-4685-a6e7-3ab0fb5f9f45');
@@ -50,7 +51,7 @@ export class ApiCallsService {
   }
 
 
-//challnge 2  
+//challenge 2  
   GetChallange2():Observable<challenge2>{
     const headers= new HttpHeaders()
       .set('Authorization', '016db3f4-8bf4-4685-a6e7-3ab0fb5f9f45');

@@ -24,110 +24,9 @@ export class Challenge3Component implements OnInit {
 
 
     this.service.GetChallange3().subscribe((data:challenge3)=>{
-      // var wizzardType = data.wizardType;
-      // var maze = data.maze;
-      var wizzardType= "Fire";
-      var maze = [
-        [
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F"
-        ],
-        [
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F"
-        ],
-        [
-            "I",
-            "F",
-            "C",
-            "F",
-            "F",
-            "F",
-            "B",
-            "T",
-            "F"
-        ],
-        [
-            "W",
-            "P",
-            "F",
-            "G",
-            "F",
-            "A",
-            "F",
-            "F",
-            "D"
-        ],
-        [
-            "F",
-            "F",
-            "F",
-            "F",
-            "I",
-            "F",
-            "F",
-            "F",
-            "F"
-        ],
-        [
-            "B",
-            "F",
-            "T",
-            "P",
-            "D",
-            "W",
-            "F",
-            "T",
-            "F"
-        ],
-        [
-            "F",
-            "S",
-            "C",
-            "G",
-            "F",
-            "T",
-            "S",
-            "F",
-            "W"
-        ],
-        [
-            "C",
-            "T",
-            "F",
-            "F",
-            "F",
-            "F",
-            "D",
-            "G",
-            "F"
-        ],
-        [
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F",
-            "F"
-        ]
-    ]
+      var wizzardType = data.wizardType;
+      var maze = data.maze;
+     
 
       console.log("type:" + wizzardType);
     
@@ -142,19 +41,20 @@ export class Challenge3Component implements OnInit {
       }
        //call function with right values
        if(wizzardType=="Fire"){
-        this.findNextMove(maze,FireValues);
+        this.findFirstMove(maze,FireValues);
+        
        }else if(wizzardType=="Ice"){
-        this.findNextMove(maze,IceValues);
+        this.findFirstMove(maze,IceValues);
        }
        else if(wizzardType=="Wind"){
-        this.findNextMove(maze,WindValues);
+        this.findFirstMove(maze,WindValues);
        }else if(wizzardType=="Water"){
-        this.findNextMove(maze,WaterValues);
+        this.findFirstMove(maze,WaterValues);
        }
     })
   }
 
-  findNextMove(maze:string[][],values:string[][]){
+  findFirstMove(maze:string[][],values:string[][]){
 
     //dubbele for
     var best = values[0]
@@ -164,7 +64,7 @@ export class Challenge3Component implements OnInit {
     var tile_found= false;
 
 
-    console.log("possibilitys");
+    console.log("first tiles");
 
     for(var i=0; i< maze.length; i++) {
          
@@ -182,9 +82,11 @@ export class Challenge3Component implements OnInit {
         bestValue= maze[i][0];
         tile_found=true;
         this.score+=0.5;
+      }     
+      
+      if(tile_found){
+        this.CurrentPosition= i;
       }
-
-           
       
       
      
