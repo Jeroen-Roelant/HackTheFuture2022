@@ -12,19 +12,18 @@ export class Challenge2Component implements OnInit {
 
   ngOnInit(): void {
     this.service.GetChallange2().subscribe((data:challenge2)=>{
+      //get data from get request
       var key = data.key;
       var iv = data.iv;
       var spell= data.spell;
   
-      console.log("key: " +key);
-      console.log("iv: " +iv);
-      console.log("spell: " +spell);
+      //decrypt spell
       this.decrypt(spell,key,iv);
     })  
   }
 
   decrypt(spell:string,key:string,iv:string){
-  
+  //check if key / iv are good 
    if(key.length < 16 ){
       //verleng key
       while(key.length != 16){
@@ -38,13 +37,12 @@ export class Challenge2Component implements OnInit {
       }
     }
  
-    
+    //if key and iv are good --> start decrypt
     if(key.length == 16 && iv.length == 16){
       //decrypt
-      console.log("start decrypt");
-      
-
       var decrypted_spell= this.decryptMessage(spell,key,iv)
+
+      //post to api
       this.service.PostChallange2(decrypted_spell).subscribe(data =>{
         console.log("post result: " + data.keyPart);
         
