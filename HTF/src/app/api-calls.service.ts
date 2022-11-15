@@ -10,6 +10,13 @@ export interface challenge1 {
   heroDistanceFromMonster: number;
   heroWeaponHeight: number;
 }
+
+export interface challenge2 {
+  key: string
+  iv: string
+  spell: string
+} 
+
 export interface Keypart{
   "keyPart" : string;
 }
@@ -34,5 +41,14 @@ export class ApiCallsService {
     const headers= new HttpHeaders()
       .set('Authorization', '016db3f4-8bf4-4685-a6e7-3ab0fb5f9f45');
     return this.http.post(this.baseURL+"azkaban",{"answer": aplha},{ 'headers': headers });
+  }
+
+
+  
+  GetChallange2():Observable<challenge2>{
+    const headers= new HttpHeaders()
+      .set('Authorization', '016db3f4-8bf4-4685-a6e7-3ab0fb5f9f45');
+
+    return this.http.get<challenge2>(this.baseURL+"statue-of-slytherin",{ 'headers': headers });
   }
 }
